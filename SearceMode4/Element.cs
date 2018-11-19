@@ -17,16 +17,14 @@ namespace SearceMode4
         {
             NameMod = nameMod;
             RelativePath = relativePath;
-            SpecialPath = specialPath;
-            //couple = new Dictionary<string, Dictionary<string, string>>();
-            //couple[nameMod].Add(relativePath, specialPath);
+            SpecialPath = specialPath;            
         }
 
-        internal string NameMod { get; }
+        public string NameMod { get; set; }
 
-        internal string RelativePath { get; }
+        public string RelativePath { get; set; }
 
-        internal string SpecialPath { get; }
+        public string SpecialPath { get; set; }
 
         public override string ToString()
         {

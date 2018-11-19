@@ -11,18 +11,11 @@ namespace SearceMode4
         static void Main(string[] args)
         {
             Assembly assembly = new Assembly(@"E:\Games\Skyrim - Requiem for a Dream v3.6.2\Requiem for a Dream XP v3.6.2");
-
-            assembly.Serialize("Assembly.xml");
-            
-            //Source source = new Source(@"E:\MySkyrimLE\Requiem for a Dream Source");
-
-            //Matching matching = new Matching (assembly, source);
-            
-            //Copy elements = new Copy (null, assembly, source);
-
-            //matching.Display();
-
-            
+            Source sourceWithPath = new Source(@"E:\MySkyrimLE\Mods");
+            sourceWithPath.Serialize(@"E:\Projekts VS\SearceMode4\SearceMode4\SourceWithPath.xml");
+            Source sourceWithoutPath = new Source(@"E:\MySkyrimLE\Requiem for a Dream Source");
+            sourceWithoutPath.Serialize(@"E:\Projekts VS\SearceMode4\SearceMode4\SourceWithoutPath.xml");
+            Console.ReadKey();
         }
     }
 }

@@ -9,9 +9,10 @@ using System.Xml.Serialization;
 
 namespace SearceMode4
 {
-    [Serializable]
     public abstract class Collection : IList<Element>
-    {        
+    {
+        // Тип для Сериализации и Десериализации.
+        readonly XmlSerializer serializer = new XmlSerializer(typeof(List<Element>));
 
         public Collection()
         { }
@@ -30,14 +31,12 @@ namespace SearceMode4
 
         protected List<string> AllFilesDir { get; private set; }
 
-        [XmlIgnore]
+       
         public int Count => ((IList<Element>)Core).Count;
-        [XmlIgnore]
+      
         public bool IsReadOnly => ((IList<Element>)Core).IsReadOnly;
         
         public Element this[int index] { get => ((IList<Element>)Core)[index]; set => ((IList<Element>)Core)[index] = value; }
-
-
 
         //Идентификация пути
         protected void PathIdentification()
@@ -58,6 +57,9 @@ namespace SearceMode4
                         case ".rar":
                             AllFilesDir = GetFilesArch.GetFiles(AbsolutePath);
                             break;
+                        case ".xml":
+                            Deserialize(AbsolutePath);
+                            break;
                         default:
                             Messenger.Message("Некорректный тип файла...");
                             break;
@@ -72,7 +74,38 @@ namespace SearceMode4
             }
         }
 
-        protected abstract void Create();          
+        protected abstract void Create();
+
+        // СЕРИАЛИЗАЦИЯ.
+        internal void Serialize(string nameFile)
+        {
+            using (var stream = new FileStream(nameFile, FileMode.Create, FileAccess.Write, FileShare.Read))
+            {
+                // Сохраняю объект в XML-файле на диске(СЕРИАЛИЗАЦИЯ).
+                serializer.Serialize(stream, Core);
+                Messenger.Message("Объект сериализован!");
+            }
+        }
+
+        // ДЕСЕРИАЛИЗАЦИЯ.
+        internal void Deserialize(string nameFile)
+        {
+            try
+            {
+                using (var stream = new FileStream(nameFile, FileMode.Open, FileAccess.Read, FileShare.Read))
+                {
+                    // Восстанавливаю объект из XML-файла.
+                    Core = serializer.Deserialize(stream) as List<Element>;
+                    Messenger.Message("Объект Десериализован!");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Messenger.Message(ex.Message);
+            }
+        }
 
         public void Display()
         {

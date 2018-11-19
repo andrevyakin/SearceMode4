@@ -10,10 +10,7 @@ namespace SearceMode4
 {
     [Serializable]
     public class Assembly : Collection
-    {
-        // Тип для Сериализации и Десериализации.
-        readonly XmlSerializer serializer = new XmlSerializer(typeof(List<Element>));
-
+    { 
         public Assembly()
         { }
 
@@ -45,38 +42,6 @@ namespace SearceMode4
             //Записываю корневые файлы и папки в синглтон
             RootAssembly.GetInstance(rootDirsAssembly, rootFilesAssembly);
 
-        }
-
-        // СЕРИАЛИЗАЦИЯ.
-        internal void Serialize(string nameFile)
-        {
-            using (var stream = new FileStream(nameFile, FileMode.Create, FileAccess.Write, FileShare.Read))
-            {
-                // Сохраняем объект в XML-файле на диске(СЕРИАЛИЗАЦИЯ).
-                serializer.Serialize(stream, Core);
-                Messenger.Message("Объект сериализован!");
-            }
-        }
-
-
-        // ДЕСЕРИАЛИЗАЦИЯ.
-        internal void Deserialize(string nameFile)
-        {
-            try
-            {
-                using (var stream = new FileStream(nameFile, FileMode.Open, FileAccess.Read, FileShare.Read))
-                {
-                    // Восстанавливаем объект из XML-файла.
-                    //instance2 = serializer.Deserialize(stream) as MyClass;
-                    Messenger.Message("Объект Десериализован!");
-                }
-
-
-            }
-            catch (Exception ex)
-            {
-                Messenger.Message(ex.Message);
-            }
-        }
+        }       
     }
 }
