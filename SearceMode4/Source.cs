@@ -20,6 +20,8 @@ namespace SearceMode4
         {
             PathIdentification();
 
+            if (Core != null) return;
+
             var preprocessing = new List<Element>();
 
             foreach (var item in AllFilesDir)

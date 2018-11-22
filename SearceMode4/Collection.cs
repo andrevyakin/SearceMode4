@@ -13,10 +13,7 @@ namespace SearceMode4
     {
         // Тип для Сериализации и Десериализации.
         readonly XmlSerializer serializer = new XmlSerializer(typeof(List<Element>));
-
-        //public Collection()
-        //{ }
-
+        
         protected Collection(string absolutePath)
         {
             AbsolutePath = absolutePath;
@@ -88,8 +85,14 @@ namespace SearceMode4
         }
 
         // ДЕСЕРИАЛИЗАЦИЯ.
-        internal void Deserialize(string nameFile)
+        private void Deserialize(string nameFile)
         {
+            if (!File.Exists(nameFile))
+            {
+                Messenger.Message($"Не найден файл: {nameFile}");
+                return;
+            }
+        
             try
             {
                 using (var stream = new FileStream(nameFile, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -98,8 +101,6 @@ namespace SearceMode4
                     Core = serializer.Deserialize(stream) as List<Element>;
                     Messenger.Message("Объект Десериализован!");
                 }
-
-
             }
             catch (Exception ex)
             {

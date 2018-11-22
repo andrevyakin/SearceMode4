@@ -1,42 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace SearceMode4
 {
     internal class Assembly : Collection
-    { 
-       internal Assembly(string absolutePath) : base(absolutePath)
+    {
+        internal Assembly(string absolutePath) : base(absolutePath)
         {
-        }          
+        }
 
         protected override void Create()
         {
             PathIdentification();
 
-            Core = new List<Element>();
+            if (Core == null)
+            {
+                Core = new List<Element>();
+                //Формирую основую базу
+                foreach (var file in AllFilesDir)
+                    if (file.StartsWith("Data", StringComparison.OrdinalIgnoreCase))
+                        Core.Add(new Element("Data", file.Substring(5), Path.Combine(AbsolutePath, file.Substring(5))));
+            }
 
             var rootDirsAssembly = new List<string>();
             var rootFilesAssembly = new List<string>();
 
-            foreach (var file in AllFilesDir)
+            foreach (var item in Core)
             {
-                //Формирую основую базу
-                if (file.StartsWith("Data", StringComparison.OrdinalIgnoreCase))
-                    Core.Add(new Element("Data", file.Substring(5), Path.Combine(AbsolutePath, file.Substring(5))));
                 //Получаю корневые директории сборки, нужны для обработки путей Исходников
-                if (file.StartsWith("Data", StringComparison.OrdinalIgnoreCase) && file.Split('\\').Length > 2 && !rootDirsAssembly.Contains(file.Split('\\')[1]))
-                    rootDirsAssembly.Add(file.Split('\\')[1]);
+                if (item.EntryPath.Split('\\').Length > 1 && !rootDirsAssembly.Contains(item.EntryPath.Split('\\')[0]))
+                    rootDirsAssembly.Add(item.EntryPath.Split('\\')[0]);
                 //Получаю корневые файлы сборки, нужны для обработки путей Исходников
-                if (file.StartsWith("Data", StringComparison.OrdinalIgnoreCase) && file.Split('\\').Length == 2 && !rootFilesAssembly.Contains(file.Substring(5)))
-                    rootFilesAssembly.Add(file.Substring(5));
+                if (item.EntryPath.Split('\\').Length == 1)
+                    rootFilesAssembly.Add(item.EntryPath);
             }
+            
             //Записываю корневые файлы и папки в синглтон
             RootAssembly.GetInstance(rootDirsAssembly, rootFilesAssembly);
-        }       
+        }
     }
 }

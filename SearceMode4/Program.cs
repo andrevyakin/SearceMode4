@@ -19,9 +19,15 @@ namespace SearceMode4
             #endregion
 
             #region На работе
-            Assembly assembly = new Assembly(@"D:\Skyrim LE\Skyrim - Requiem for a Dream v3.6.2\Requiem for a Dream XP v3.6.2");
-            assembly.Serialize(@"D:\source\repos\SearceMode4\SearceMode4\Assembly.xml");
+            //Assembly assembly = new Assembly(@"D:\Skyrim LE\Skyrim - Requiem for a Dream v3.6.2\Requiem for a Dream XP v3.6.2");
+            //assembly.Serialize(@"D:\source\repos\SearceMode4\SearceMode4\Assembly.xml");
+
+            Assembly assembly = new Assembly(@"D:\source\repos\SearceMode4\SearceMode4\Assembly.xml");
+            Source source = new Source(@"D:\source\repos\SearceMode4\SearceMode4\Sourse.xml");
+            Matching matching = new Matching(assembly, source);
+            Console.ReadKey();
             //Repacking.RepackingRar(@"D:\Skyrim LE\Mods\Weapons\Tamrielic Lore - Chrysamere\tamrielic_lore v.4.rar");
+
             #endregion
 
         }
