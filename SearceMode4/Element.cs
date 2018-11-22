@@ -11,24 +11,26 @@ namespace SearceMode4
         public Element()
         { }
         
-        //private readonly Dictionary<string, Dictionary<string, string>> couple;
-
-        internal Element(string nameMod, string relativePath, string specialPath)
+        internal Element(string nameMod, string entryPath, string specialPath)
         {
+            //NameMod - Имя мода
             NameMod = nameMod;
-            RelativePath = relativePath;
+            //EntryPath - Путь внутри мода
+            EntryPath = entryPath;
+            //SpecialPath - Путь от дирректории с модами до мода, для Sourse, или
+            //Полный путь к файлу для Assembly
             SpecialPath = specialPath;            
         }
 
         public string NameMod { get; set; }
 
-        public string RelativePath { get; set; }
+        public string EntryPath { get; set; }
 
         public string SpecialPath { get; set; }
 
         public override string ToString()
         {
-            return $"NameMod {NameMod}\nRelativePath {RelativePath}\nSpecialPath {SpecialPath}\n";
+            return $"NameMod {NameMod}\nRelativePath {EntryPath}\nSpecialPath {SpecialPath}\n";
         }
     }
 }

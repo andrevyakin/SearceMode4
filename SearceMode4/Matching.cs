@@ -50,16 +50,16 @@ namespace SearceMode4
                 var flagNotFound = false;
                 foreach (var sourceItem in source)
                 {
-                    if (string.Compare(assemblyItem.RelativePath, sourceItem.RelativePath, true) == 0 && !Result.ContainsKey(sourceItem.NameMod))
+                    if (string.Compare(assemblyItem.EntryPath, sourceItem.EntryPath, true) == 0 && !Result.ContainsKey(sourceItem.NameMod))
                     {
-                        Result.Add(sourceItem.NameMod, new Dictionary<string, string> { { assemblyItem.RelativePath, assemblyItem.SpecialPath } });
+                        Result.Add(sourceItem.NameMod, new Dictionary<string, string> { { assemblyItem.EntryPath, assemblyItem.SpecialPath } });
                         flagNotFound = true;
                         countFile++;
                         break;
                     }
-                    if (string.Compare(assemblyItem.RelativePath, sourceItem.RelativePath, true) == 0 && Result.ContainsKey(sourceItem.NameMod))
+                    if (string.Compare(assemblyItem.EntryPath, sourceItem.EntryPath, true) == 0 && Result.ContainsKey(sourceItem.NameMod))
                     {
-                        Result[sourceItem.NameMod].Add(assemblyItem.RelativePath, assemblyItem.SpecialPath);
+                        Result[sourceItem.NameMod].Add(assemblyItem.EntryPath, assemblyItem.SpecialPath);
                         flagNotFound = true;
                         countFile++;
                         break;
@@ -67,13 +67,13 @@ namespace SearceMode4
                 }
                 if (!flagNotFound && !Result.ContainsKey("Not found"))
                 {
-                    Result.Add("Not found", new Dictionary<string, string> { { assemblyItem.RelativePath, assemblyItem.SpecialPath } });
+                    Result.Add("Not found", new Dictionary<string, string> { { assemblyItem.EntryPath, assemblyItem.SpecialPath } });
                     continue;
                 }
 
                 if (!flagNotFound && Result.ContainsKey("Not found"))
                 {
-                    Result["Not found"].Add(assemblyItem.RelativePath, assemblyItem.SpecialPath);
+                    Result["Not found"].Add(assemblyItem.EntryPath, assemblyItem.SpecialPath);
                 }
             }
         }

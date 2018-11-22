@@ -8,13 +8,9 @@ using System.Xml.Serialization;
 
 namespace SearceMode4
 {
-    [Serializable]
-    public class Assembly : Collection
+    internal class Assembly : Collection
     { 
-        public Assembly()
-        { }
-
-        internal Assembly(string absolutePath) : base(absolutePath)
+       internal Assembly(string absolutePath) : base(absolutePath)
         {
         }          
 
@@ -41,7 +37,6 @@ namespace SearceMode4
             }
             //Записываю корневые файлы и папки в синглтон
             RootAssembly.GetInstance(rootDirsAssembly, rootFilesAssembly);
-
         }       
     }
 }

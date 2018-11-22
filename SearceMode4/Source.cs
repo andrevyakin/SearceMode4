@@ -62,7 +62,7 @@ namespace SearceMode4
 
             foreach (var item in preprocessing)
             {
-                var itemSplit = item.RelativePath.Split('\\');
+                var itemSplit = item.EntryPath.Split('\\');
                 var itemJoin = new List<string>();
                 var flagRootFile = false;
                 var flagPathInMod = false;
