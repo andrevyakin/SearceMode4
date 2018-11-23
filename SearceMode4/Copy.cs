@@ -19,7 +19,6 @@ namespace SearceMode4
         internal Copy(string pathResult, string pathAssembly, string pathSource) : base(pathAssembly, pathSource)
         {
             this.pathResult = pathResult;
-            
             Create();
         }
 

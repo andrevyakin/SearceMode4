@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -22,17 +23,14 @@ namespace SearceMode4
 
         protected string AbsolutePath { get; }
 
-
         public List<Element> Core { get; protected set; }
-
 
         protected List<string> AllFilesDir { get; private set; }
 
-       
         public int Count => ((IList<Element>)Core).Count;
-      
+
         public bool IsReadOnly => ((IList<Element>)Core).IsReadOnly;
-        
+
         public Element this[int index] { get => ((IList<Element>)Core)[index]; set => ((IList<Element>)Core)[index] = value; }
 
         //Идентификация пути
@@ -58,16 +56,19 @@ namespace SearceMode4
                             Deserialize(AbsolutePath);
                             break;
                         default:
-                            Messenger.Message("Некорректный тип файла...");
-                            break;
+                            Messenger.Message($"Некорректный тип файла... {AbsolutePath}");
+                            throw new ActiveDirectoryOperationException();
                     }
                 }
                 else
+                {
                     Messenger.Message($"Некорректный путь {AbsolutePath}");
+                    throw new ActiveDirectoryOperationException();
+                }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Messenger.Message($"Ошибка пути к каталогу: {e.Message}");
+                Environment.Exit(0);
             }
         }
 
@@ -92,7 +93,7 @@ namespace SearceMode4
                 Messenger.Message($"Не найден файл: {nameFile}");
                 return;
             }
-        
+
             try
             {
                 using (var stream = new FileStream(nameFile, FileMode.Open, FileAccess.Read, FileShare.Read))
@@ -167,7 +168,5 @@ namespace SearceMode4
         {
             return ((IList<Element>)Core).GetEnumerator();
         }
-
-        
     }
 }

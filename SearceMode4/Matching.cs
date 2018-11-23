@@ -30,13 +30,7 @@ namespace SearceMode4
             if (Result == null)
                 Create();
         }
-
-
-        //protected string FullPath { get; private set; }
-        //protected string NameMod { get; private set; }
-        //protected string SpecialPath { get; private set; }
-        //protected string RelativePath { get; private set; }
-
+        
         protected Dictionary<string, Dictionary<string, string>> Result { get; private set; }              
 
         private int countFile;

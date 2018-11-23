@@ -22,16 +22,30 @@ namespace SearceMode4
             //Полный путь к файлу для Assembly
             SpecialPath = specialPath;            
         }
-
+        
         public string NameMod { get; set; }
 
         public string EntryPath { get; set; }
 
         public string SpecialPath { get; set; }
-
+        
         public override string ToString()
         {
             return $"NameMod {NameMod}\nRelativePath {EntryPath}\nSpecialPath {SpecialPath}\n";
         }
+    }
+
+    internal class ElementAssembly : Element
+    {
+        internal ElementAssembly()
+        {
+        }
+
+        internal ElementAssembly(string entryPath, string specialPath)
+        {
+            AssemblyElement = new Dictionary<string, string> {{entryPath, specialPath}};
+        }
+        
+        public Dictionary<string, string> AssemblyElement { get; set; }
     }
 }
