@@ -20,7 +20,19 @@ namespace SearceMode4
             EntryPath = entryPath;
             //SpecialPath - Путь от дирректории с модами до мода, для Sourse, или
             //Полный путь к файлу для Assembly
-            SpecialPath = specialPath;            
+            SpecialPath = specialPath;
+            
+            if (AssemblyDictionary == null)
+                AssemblyDictionary = new Dictionary<string, string> {{EntryPath, SpecialPath}};
+            else
+                AssemblyDictionary.Add(EntryPath, SpecialPath);
+
+            if(SourceDictionary == null)
+                SourceDictionary = new Dictionary<string, List<Dictionary<string, string>>>();
+            if (!SourceDictionary.ContainsKey(NameMod))
+                SourceDictionary.Add(NameMod, new List<Dictionary<string, string>> {AssemblyDictionary});
+            else
+                SourceDictionary[NameMod].Add(AssemblyDictionary);
         }
         
         public string NameMod { get; set; }
@@ -28,24 +40,16 @@ namespace SearceMode4
         public string EntryPath { get; set; }
 
         public string SpecialPath { get; set; }
+
+        internal Dictionary<string, string> AssemblyDictionary { get; set; }
+
+        internal Dictionary<string, List <Dictionary<string, string>>> SourceDictionary { get; set; } 
         
         public override string ToString()
         {
-            return $"NameMod {NameMod}\nRelativePath {EntryPath}\nSpecialPath {SpecialPath}\n";
+            return $"NameMod {NameMod}\nEntryPath {EntryPath}\nSpecialPath {SpecialPath}\n";
         }
     }
 
-    internal class ElementAssembly : Element
-    {
-        internal ElementAssembly()
-        {
-        }
-
-        internal ElementAssembly(string entryPath, string specialPath)
-        {
-            AssemblyElement = new Dictionary<string, string> {{entryPath, specialPath}};
-        }
-        
-        public Dictionary<string, string> AssemblyElement { get; set; }
-    }
+    
 }

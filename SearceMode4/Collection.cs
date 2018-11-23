@@ -14,7 +14,12 @@ namespace SearceMode4
     {
         // Тип для Сериализации и Десериализации.
         readonly XmlSerializer serializer = new XmlSerializer(typeof(List<Element>));
-        
+
+        protected Collection()
+        {
+
+        }
+
         protected Collection(string absolutePath)
         {
             AbsolutePath = absolutePath;
@@ -109,7 +114,7 @@ namespace SearceMode4
             }
         }
 
-        public void Display()
+        internal virtual void Display()
         {
             var count = 0;
             foreach (Element item in Core)

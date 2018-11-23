@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SearceMode4
 {
-    internal class Matching
+    internal class Matching : Collection
     {
 
         private readonly Assembly assembly;
@@ -19,7 +19,7 @@ namespace SearceMode4
         {
             this.assembly = assembly;
             this.source = source;
-            if (Result == null)
+           // if (Result == null)
                 Create();
         }
 
@@ -27,66 +27,56 @@ namespace SearceMode4
         {
             assembly = new Assembly(pathAssembly);
             source = new Source(pathSource);
-            if (Result == null)
+           // if (Result == null)
                 Create();
         }
         
-        protected Dictionary<string, Dictionary<string, string>> Result { get; private set; }              
+        //protected Dictionary<string, Dictionary<string, string>> Result { get; private set; }              
 
         private int countFile;
 
-        protected void Create()
+        protected override void Create()
         {
-            Result = new Dictionary<string, Dictionary<string, string>>();
+            Core = new List<Element>();
             countFile = 0;
             foreach (var assemblyItem in assembly)
             {
                 var flagNotFound = false;
                 foreach (var sourceItem in source)
                 {
-                    if (string.Compare(assemblyItem.EntryPath, sourceItem.EntryPath, true) == 0 && !Result.ContainsKey(sourceItem.NameMod))
+                    if (String.Compare(assemblyItem.EntryPath, sourceItem.EntryPath,
+                            StringComparison.OrdinalIgnoreCase) == 0)
                     {
-                        Result.Add(sourceItem.NameMod, new Dictionary<string, string> { { assemblyItem.EntryPath, assemblyItem.SpecialPath } });
+                        Core.Add(new Element(sourceItem.NameMod, assemblyItem.EntryPath, assemblyItem.SpecialPath));
                         flagNotFound = true;
                         countFile++;
                         break;
                     }
-                    if (string.Compare(assemblyItem.EntryPath, sourceItem.EntryPath, true) == 0 && Result.ContainsKey(sourceItem.NameMod))
-                    {
-                        Result[sourceItem.NameMod].Add(assemblyItem.EntryPath, assemblyItem.SpecialPath);
-                        flagNotFound = true;
-                        countFile++;
-                        break;
-                    }
-                }
-                if (!flagNotFound && !Result.ContainsKey("Not found"))
-                {
-                    Result.Add("Not found", new Dictionary<string, string> { { assemblyItem.EntryPath, assemblyItem.SpecialPath } });
-                    continue;
                 }
 
-                if (!flagNotFound && Result.ContainsKey("Not found"))
+                if (!flagNotFound)
                 {
-                    Result["Not found"].Add(assemblyItem.EntryPath, assemblyItem.SpecialPath);
+                    Core.Add(new Element("Not found", assemblyItem.EntryPath, assemblyItem.SpecialPath));
+
                 }
             }
         }
 
-        public void Display(bool all = false)
+        public new void Display(bool all = false)
         {
             var count = 0;
             Messenger.Message($"Всего файлов в сборке: {assembly.Count}");
             Messenger.Message($"Всего файлов в исходниках: {source.Count}");
-            Messenger.Message($"Найдено модов: {Result.Count}");
+            Messenger.Message($"Найдено модов: {Core.Count}");
             Messenger.Message($"Найдено файлов: {countFile}");
-            Messenger.Message($"Не найдено файлов: {Result["Not found"].Count}");
-            Messenger.Message($"Проверка: Найдено + Ненайдено = {countFile + Result["Not found"].Count}");
+            //Messenger.Message($"Не найдено файлов: {Core.["Not found"].Count}");
+           // Messenger.Message($"Проверка: Найдено + Ненайдено = {countFile + Result["Not found"].Count}");
             if (all)
-                foreach (var mod in Result)
+                foreach (var mod in Core)
                 {
-                    Messenger.Message(string.Format($"\nИмя мода: {mod.Key}\n") + new string('-', 40));
+                    Messenger.Message(string.Format($"\nИмя мода: {mod.NameMod}\n") + new string('-', 40));
 
-                    foreach (var file in Result[mod.Key])
+                    foreach (var file in mod.AssemblyDictionary)
                     {
                         Messenger.Message($"Файлы в моде: {file.Key}");
                         if (++count % 10 == 0) Console.ReadKey();

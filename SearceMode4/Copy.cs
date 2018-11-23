@@ -26,15 +26,15 @@ namespace SearceMode4
         {
             base.Create();
 
-            if (Result == null)
+            if (Core == null)
             {
                 Messenger.Message("Что-то пошло не так...");
                 return;
             }
 
-            foreach (var dir in Result)
+            foreach (var dir in Core)
             {
-                foreach (var file in dir.Value)
+                foreach (var file in dir.NameMod)
                 {
                     
                 }
