@@ -20,7 +20,7 @@ namespace SearceMode4
                 //Формирую основую базу
                 foreach (var file in AllFilesDir)
                     if (file.StartsWith("Data", StringComparison.OrdinalIgnoreCase))
-                        Core.Add(new Element("Data", file.Substring(5), Path.Combine(AbsolutePath, file.Substring(5))));
+                        Core.Add(new Element("Data", file.Substring(5), Path.Combine(AbsolutePath, "Data", file.Substring(5))));
             }
 
             var rootDirsAssembly = new List<string>();

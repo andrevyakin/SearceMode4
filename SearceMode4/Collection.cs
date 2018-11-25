@@ -14,12 +14,7 @@ namespace SearceMode4
     {
         // Тип для Сериализации и Десериализации.
         readonly XmlSerializer serializer = new XmlSerializer(typeof(List<Element>));
-
-        protected Collection()
-        {
-
-        }
-
+        
         protected Collection(string absolutePath)
         {
             AbsolutePath = absolutePath;

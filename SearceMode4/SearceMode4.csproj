@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllFiles.cs" />
+    <Compile Include="Archive.cs" />
     <Compile Include="Assembly.cs" />
     <Compile Include="Collection.cs" />
     <Compile Include="Copy.cs" />

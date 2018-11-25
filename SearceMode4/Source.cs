@@ -37,9 +37,13 @@ namespace SearceMode4
                         case ".rar":
                             {
                                 var files = GetFilesArch.GetFiles(Path.Combine(AbsolutePath, item));
+                                
+                                var specialPath = Path.GetDirectoryName(item) == null
+                                    ? Path.GetFileNameWithoutExtension(item)
+                                    : string.Concat(Path.GetDirectoryName(item), '\\', Path.GetFileNameWithoutExtension(item));
+
                                 foreach (var file in files)
-                                    preprocessing.Add(new Element(Path.GetFileNameWithoutExtension(item), file,
-                                        Path.GetDirectoryName(item)));
+                                    preprocessing.Add(new Element(Path.GetFileNameWithoutExtension(item), file, specialPath));
                                 break;
                             }
                         //Обрабатываю распакованные моды
@@ -47,7 +51,7 @@ namespace SearceMode4
                             {
                                 if (item.IndexOf('\\') != -1)
                                     preprocessing.Add(new Element(item.Remove(item.IndexOf('\\')),
-                                        item.Substring(item.IndexOf('\\') + 1), string.Empty));
+                                        item.Substring(item.IndexOf('\\') + 1), item.Remove(item.IndexOf('\\'))));
                                 else
                                     Messenger.Message($"{item}\nНе является архивом или распакованным модом...");
                                 break;

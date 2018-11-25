@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -26,18 +27,21 @@ namespace SearceMode4
         {
             base.Create();
 
-            if (Core == null)
+            if (Result == null)
             {
                 Messenger.Message("Что-то пошло не так...");
                 return;
             }
 
-            foreach (var dir in Core)
+            foreach (var dir in Result)
             {
-                foreach (var file in dir.NameMod)
+                foreach (var file in dir.Value)
                 {
-                    
+                    if (!Directory.Exists(Path.Combine(pathResult, dir.Key, Path.GetDirectoryName(file.Key) ?? throw new InvalidOperationException())))
+                        Directory.CreateDirectory(Path.Combine(pathResult, dir.Key, Path.GetDirectoryName(file.Key) ?? throw new InvalidOperationException()));
+                    File.Copy(file.Value, Path.Combine(pathResult, dir.Key, file.Key), true);
                 }
+
             }
         }
     }
