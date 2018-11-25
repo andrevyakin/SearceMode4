@@ -11,18 +11,18 @@ namespace SearceMode4
         static void Main(string[] args)
         {
             #region Дома
-            Assembly assembly = new Assembly(@"E:\Games\Skyrim - Requiem for a Dream v3.6.2\Requiem for a Dream XP v3.6.2");
+            //Assembly assembly = new Assembly(@"E:\Games\Skyrim - Requiem for a Dream v3.6.2\Requiem for a Dream XP v3.6.2");
             //Assembly assembly = new Assembly(@"E:\Projekts VS\SearceMode4\SearceMode4\Assembly.xml");
             
-           Source source = new Source(@"E:\MySkyrimLE\Mods");
+           //Source source = new Source(@"E:\MySkyrimLE\Mods");
            //source.Serialize(@"E:\Projekts VS\SearceMode4\SearceMode4\Source.xml");
 
            //Source source = new Source(@"E:\Projekts VS\SearceMode4\SearceMode4\Source.xml");
            //Source source = new Source(@"E:\MySkyrimLE\Requiem for a Dream Source Test");
            //source.Add(@"E:\MySkyrimLE\Requiem for a Dream Source");
            //source.Serialize(@"E:\Projekts VS\SearceMode4\SearceMode4\Source.xml");
-           Copy copy = new Copy(@"E:\MySkyrimLE\Requiem for a Dream Result Test", assembly, source);
-          // Archive archive = new Archive(@"E:\MySkyrimLE\Requiem for a Dream Result Test", assembly, source);
+           //Copy copy = new Copy(@"E:\MySkyrimLE\Requiem for a Dream Result Test", @"E:\Games\Skyrim - Requiem for a Dream v3.6.2\Requiem for a Dream XP v3.6.2", @"E:\MySkyrimLE\Mods");
+           Archive archive = new Archive(@"E:\MySkyrimLE\Requiem for a Dream Result Test", @"E:\Games\Skyrim - Requiem for a Dream v3.6.2\Requiem for a Dream XP v3.6.2", @"E:\MySkyrimLE\Requiem for a Dream Source");
 
             #endregion
 

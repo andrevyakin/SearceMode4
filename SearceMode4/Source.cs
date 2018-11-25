@@ -38,12 +38,8 @@ namespace SearceMode4
                             {
                                 var files = GetFilesArch.GetFiles(Path.Combine(AbsolutePath, item));
                                 
-                                var specialPath = Path.GetDirectoryName(item) == null
-                                    ? Path.GetFileNameWithoutExtension(item)
-                                    : string.Concat(Path.GetDirectoryName(item), '\\', Path.GetFileNameWithoutExtension(item));
-
                                 foreach (var file in files)
-                                    preprocessing.Add(new Element(Path.GetFileNameWithoutExtension(item), file, specialPath));
+                                    preprocessing.Add(new Element(Path.GetFileNameWithoutExtension(item), file, string.Concat(Path.GetDirectoryName(item), '\\', Path.GetFileNameWithoutExtension(item))));
                                 break;
                             }
                         //Обрабатываю распакованные моды
