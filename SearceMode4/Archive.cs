@@ -40,11 +40,8 @@ namespace SearceMode4
 
             foreach (var mod in Result)
             {
-                if (!Directory.Exists(pathResult))
-                    Directory.CreateDirectory(pathResult);
-                foreach (var file in mod.Value)
-                    if (!Directory.Exists(Path.Combine(pathResult, mod.Key.Remove(mod.Key.LastIndexOf('\\') + 1))))
-                        Directory.CreateDirectory(Path.Combine(pathResult, mod.Key.Remove(mod.Key.LastIndexOf('\\') + 1)));
+                if (!Directory.Exists(Path.GetDirectoryName(Path.Combine(pathResult, mod.Key)) ?? throw new InvalidOperationException()))
+                    Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(pathResult, mod.Key)) ?? throw new InvalidOperationException());
 
                 using (FileStream fs = new FileStream(string.Concat(pathResult, '\\', mod.Key, ".7z"), FileMode.Create))
                 {

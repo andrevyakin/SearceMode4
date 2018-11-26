@@ -24,15 +24,14 @@ namespace SearceMode4
                 switch (Path.GetExtension(pathArchive))
                 {
                     case ".7z":
-                        using (SevenZipExtractor sze = new SevenZipExtractor(pathArchive))
-                            foreach (var entry in sze.ArchiveFileData)
-                                if (!entry.IsDirectory)
+                        using (var archive = new SevenZipExtractor(pathArchive))
+                            foreach (var entry in archive.ArchiveFileData.Where(entry => !entry.IsDirectory))
                                     reedArchiveResult.Add(entry.FileName);
                         break;
 
                     case ".zip":
-                        using (ZipArchive archive = ZipFile.OpenRead(pathArchive))
-                            foreach (ZipArchiveEntry entry in archive.Entries)
+                        using (var archive = ZipFile.OpenRead(pathArchive))
+                            foreach (var entry in archive.Entries)
                                 reedArchiveResult.Add(entry.FullName);
                         break;
 

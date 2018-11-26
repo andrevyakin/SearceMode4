@@ -42,9 +42,6 @@ namespace SearceMode4
                     if (!Directory.Exists(Path.Combine(pathResult, dir.Key, Path.GetDirectoryName(file.Key) ?? throw new InvalidOperationException())))
                         Directory.CreateDirectory(Path.Combine(pathResult, dir.Key, Path.GetDirectoryName(file.Key) ?? throw new InvalidOperationException()));
                     File.Copy(file.Value, Path.Combine(pathResult, dir.Key, file.Key), true);
-                    //Console.WriteLine(Path.Combine(pathResult, dir.Key, Path.GetDirectoryName(file.Key) ?? throw new InvalidOperationException()));
-                    //Console.WriteLine(Path.Combine(pathResult, dir.Key, file.Key ?? throw new InvalidOperationException()));
-                    //if (++count % 10 == 0) Console.ReadKey();
                 }
 
             }
